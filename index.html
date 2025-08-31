@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dreax Bot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    background: radial-gradient(ellipse at center, #000010 0%, #0d0d2a 100%);
+    overflow: hidden;
+    color: white;
+  }
+
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  img.bot-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #7289da;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    margin: 10px 0;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0 30px 0;
+    font-weight: bold;
+  }
+
+  .status-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: red;
+  }
+
+  a.invite-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #7289da;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+
+  a.invite-btn:hover {
+    background-color: #5b6eae;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img src="https://files.fm/u/g7cnu95pz4" alt="Bot Icon" class="bot-icon">
+  <h1>Dreax Bot</h1>
+  <div class="status">
+    <div class="status-circle" id="botStatus"></div>
+    <span id="statusText">Çevrimdışı</span>
+  </div>
+  <a href="https://discord.com/api/oauth2/authorize?client_id=1408691277578375289&permissions=8&scope=bot%20applications.commands" target="_blank" class="invite-btn">Botu Davet Et</a>
+</div>
+
+<script>
+  let online = true; // true = çevrimiçi, false = çevrimdışı
+  const statusCircle = document.getElementById('botStatus');
+  const statusText = document.getElementById('statusText');
+
+  function updateStatus() {
+    if (online) {
+      statusCircle.style.backgroundColor = 'limegreen';
+      statusText.textContent = 'Çevrimiçi';
+    } else {
+      statusCircle.style.backgroundColor = 'red';
+      statusText.textContent = 'Çevrimdışı';
+    }
+  }
+
+  updateStatus();
+</script>
+
+</body>
+</html>
