@@ -12,10 +12,18 @@
     padding: 0;
     height: 100%;
     font-family: 'Roboto', sans-serif;
-    text-align: center;
-    background: radial-gradient(ellipse at center, #000010 0%, #0d0d2a 100%);
     overflow: hidden;
+    background: black;
     color: white;
+  }
+
+  /* Canvas için tüm ekranı kapla */
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    z-index: -1;
   }
 
   .container {
@@ -23,6 +31,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
   }
 
   img.bot-icon {
@@ -71,23 +80,26 @@
 </head>
 <body>
 
+<canvas id="starCanvas"></canvas>
+
 <div class="container">
-  <img src="https://files.fm/u/g7cnu95pz4" alt="Bot Icon" class="bot-icon">
+  <img src="https://yt3.googleusercontent.com/qYAbjn_iUHrXD5oDeb7EepTktKb0K4cw-kRp5UiHrVjuBfO9h14ps4rn5WuiBAnVtm5U_XGgWNA=s160-c-k-c0x00ffffff-no-rj" alt="Bot Icon" class="bot-icon">
   <h1>Dreax Bot</h1>
   <div class="status">
     <div class="status-circle" id="botStatus"></div>
-    <span id="statusText">Çevrimdışı</span>
+    <span id="statusText">Çevrimiçi</span>
   </div>
   <a href="https://discord.com/api/oauth2/authorize?client_id=1408691277578375289&permissions=8&scope=bot%20applications.commands" target="_blank" class="invite-btn">Botu Davet Et</a>
 </div>
 
 <script>
-  let online = true; // true = çevrimiçi, false = çevrimdışı
+  // Bot durumu
+  let online = true;
   const statusCircle = document.getElementById('botStatus');
   const statusText = document.getElementById('statusText');
 
   function updateStatus() {
-    if (online) {
+    if(online){
       statusCircle.style.backgroundColor = 'limegreen';
       statusText.textContent = 'Çevrimiçi';
     } else {
@@ -95,8 +107,51 @@
       statusText.textContent = 'Çevrimdışı';
     }
   }
-
   updateStatus();
+
+  // Yıldız animasyonu
+  const canvas = document.getElementById('starCanvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let numStars = 200;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function initStars() {
+    stars = [];
+    for(let i=0; i<numStars; i++){
+      stars.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        radius: Math.random()*1.5,
+        speed: Math.random()*0.5 + 0.2
+      });
+    }
+  }
+
+  function drawStars(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = 'white';
+    for(let star of stars){
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2);
+      ctx.fill();
+      star.x -= star.speed;
+      if(star.x < 0){
+        star.x = canvas.width;
+        star.y = Math.random()*canvas.height;
+      }
+    }
+    requestAnimationFrame(drawStars);
+  }
+
+  initStars();
+  drawStars();
 </script>
 
 </body>
